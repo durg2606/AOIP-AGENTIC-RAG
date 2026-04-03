@@ -4,15 +4,13 @@ An enterprise‑grade multi‑agent Retrieval‑Augmented Generation (RAG)
 🚀 Overview
 AOIP turns raw operational data (tickets, SLA logs, feedback) into real‑time, intelligent insights.
 It uses model‑driven RAG retrieval, analytical agents, and automated reporting to deliver explainable, actionable intelligence.
-
-
-
 User Query 
    → RAG Retriever (FAISS + MiniLM)
    → KPI Insight Agent
    → RCA Agent
    → Report Agent (HTML / PDF)
    → Outputs + Metrics + Dashboards
+
 🧩 Core Components
 Module	Responsibility
 data_loader.py	ETL – loads and cleans CSV datasets; saves Parquet versions.
@@ -32,8 +30,6 @@ API Endpoint	 [api.euri.ai](https://api.euri.ai/v1/chat/completions)	Invoked
 All RAG requests go through these functions, ensuring secure and traceable API calls.
 
 🧱 Project Structure
-
-
 AOIP-AGENTIC-RAG/
 ├── app/
 │   ├── __init__.py
@@ -72,6 +68,7 @@ AOIP-AGENTIC-RAG/
 ├── Dockerfile
 ├── docker-compose.yml
 └── README.md
+
 ⚗️ Core Workflow
 1. Data Ingestion → CSV ➡ clean ➡ Parquet
 2. Embedding Builder → MiniLM Sentence‑Transformers ➡ FAISS index
@@ -82,9 +79,6 @@ AOIP-AGENTIC-RAG/
 7. Monitoring → Prometheus metrics and LangFuse traces.
 
 🧠 Prompt Template (Excerpt)
-text
-
-
 You are an expert Ops Analyst AI specializing in enterprise ticket intelligence.  
 Use only the provided ticket evidence to answer.
 Ticket Context:
@@ -98,55 +92,28 @@ Provide:
 4. Business impact
 
 🧰 Requirements Summary
-
-
 pandas               numpy
 faiss-cpu            sentence-transformers
 langchain-core       jinja2
 reportlab            plotly
 python-dotenv        prometheus-client
 langfuse             requests
+
 ▶️ Run Locally
 1. Set up the environment
-bash
-
-
 pip install -r requirements.txt
 2. Prepare cleaned data
-bash
-
-
 python data_loader.py
 3. Generate sentence embeddings + index
-bash
-
-
 python retriever_builder.py
 4. Run RAG query
-bash
-
-
 python rag_pipeline.py
 5. Generate Report
-bash
-
-
 python report_agent.py
 6. (Option) Run Dashboard
-bash
-
-
 streamlit run dashboard/dashboard_ui.py
 💾 Docker Usage
-bash
-
-
-docker build -t aoip .
-docker run -p 8501:8501 -p 9100:9100 --env-file .env aoip
-Access:
-
-Streamlit UI → [localhost](http://localhost:8501)
-Prometheus metrics → [localhost](http://localhost:9100/metrics)
+docker build -t aoip 
 📊 Monitoring Metrics
 Metric	Description
 aoip_requests_total	total RAG/Agent calls processed
@@ -156,13 +123,11 @@ status (trace)	success / error via LangFuse
 Decision	Rationale
 MiniLM‑L6‑v2 Embeddings	Fast CPU embedding – best balance between semantic quality and speed.
 FAISS IndexFlatIP	Simple and deterministic; upgrade to IVF/HNSW for scale.
-EURI GPT‑4.1‑nano	Cost‑efficient GPT‑4 variant with low latency.
+GPT‑4.1‑nano	Cost‑efficient GPT‑4 variant with low latency.
 Temperature = 0.7	Balances creativity with factual reporting.
 Jinja2 + ReportLab	Offline generation of print‑ready reports.
 Prometheus + LangFuse	Full observability and traceability for production.
 🧾 Sample Output
-
-
 📦 Loaded FAISS index with 2000 vectors
 🔍 Retrieved 5 relevant tickets
 📊 Breach Rate = 7.35% (189/2572)

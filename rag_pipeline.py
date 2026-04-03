@@ -1,21 +1,3 @@
-"""
-rag_pipeline.py
-────────────────────────────────────────────
-Implements the Retrieval-Augmented Generation (RAG) layer
-for the AOIP project.
-
-Pipeline:
-    1. Load FAISS index
-    2. Retrieve similar ticket context
-    3. Build grounded prompt
-    4. Query EURI-hosted chat model
-    5. Return actionable answer
-"""
-
-# ─────────────── IMPORTS ────────────────
-import pickle
-from pathlib import Path
-
 import faiss
 import numpy as np
 import pandas as pd

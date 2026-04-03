@@ -1,22 +1,4 @@
-"""
-data_loader.py
-────────────────────────────────────────────
-Handles loading, validating, and cleaning all raw operational datasets
-for the Agentic Operational Intelligence Platform (AOIP).
 
-Outputs:
-    - Clean pandas DataFrames
-    - Optional Parquet serialization for faster downstream use
-"""
-
-# ─────────────── IMPORTS ────────────────
-import pandas as pd
-from pathlib import Path
-
-
-# ─────────────── CONFIGURATION ──────────
-# Centralised data directory; adapt to your local repo path
-# ─────────────── CONFIGURATION ──────────
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 

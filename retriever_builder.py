@@ -1,16 +1,4 @@
-"""
-retriever_builder.py
-────────────────────────────────────────────
-Builds vector embeddings from ticket descriptions and stores them in
-a FAISS index for semantic search in the AOIP RAG pipeline.
 
-Outputs:
-    - faiss_index/ticket_index.faiss         →  binary vector store
-    - faiss_index/ticket_index.pkl           →  metadata & id mapping
-    - optional semantic search tester
-"""
-
-# ─────────────── IMPORTS ────────────────
 from sentence_transformers import SentenceTransformer
 import pandas as pd
 import numpy as np

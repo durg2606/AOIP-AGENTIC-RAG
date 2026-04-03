@@ -4,11 +4,11 @@
 
 AOIP transforms raw IT operations data—tickets, SLA logs, feedback, and incident metadata—into **real-time KPI insights, root-cause diagnostics, and executive-ready reports**.
 
-Built with **LangChain, FAISS, Sentence Transformers, Prometheus, LangFuse, Streamlit, and EURI GPT-4.1-nano**, the platform combines **RAG retrieval, specialized analytical agents, observability, and automated reporting** into a production-oriented operational intelligence stack.
+Built with **LangChain, FAISS, Sentence Transformers, Prometheus, LangFuse, Streamlit, and GPT-4.1-nano**, the platform combines **RAG retrieval, specialized analytical agents, observability, and automated reporting** into a production-oriented operational intelligence stack.
 
 ---
 
-🚀 Key Capabilities
+## 🚀 Key Capabilities
 
 * 🔍 **Semantic ticket intelligence** using FAISS + MiniLM embeddings
 * 📈 **KPI analytics** for SLA breach %, MTTR, CSAT, and trend drift
@@ -20,8 +20,9 @@ Built with **LangChain, FAISS, Sentence Transformers, Prometheus, LangFuse, Stre
 
 ---
 
-🏗️ Architecture Overview
+## 🏗️ Architecture Overview
 
+```text
 User Query
    → RAG Retriever (FAISS + MiniLM)
    → KPI Insight Agent
@@ -30,7 +31,7 @@ User Query
    → Outputs + Metrics + Dashboards
 ```
 
-⚙️ Processing Flow
+### ⚙️ Processing Flow
 
 1. **Data Ingestion** → CSV → cleaned Parquet datasets
 2. **Embedding Pipeline** → MiniLM sentence embeddings → FAISS index
@@ -42,8 +43,9 @@ User Query
 
 ---
 
-📁 Project Structure
+## 📁 Project Structure
 
+```text
 AOIP-AGENTIC-RAG/
 ├── app/
 │   ├── __init__.py
@@ -88,7 +90,9 @@ AOIP-AGENTIC-RAG/
 └── README.md
 ```
 
-🧩 Core Modules
+---
+
+## 🧩 Core Modules
 
 | Module                      | Responsibility                                            |
 | --------------------------- | --------------------------------------------------------- |
@@ -100,10 +104,10 @@ AOIP-AGENTIC-RAG/
 | `report_agent.py`           | HTML/PDF stakeholder reports                              |
 | `monitoring/logger.py`      | Prometheus metrics + LangFuse tracing decorators          |
 | `dashboard/dashboard_ui.py` | Streamlit dashboard frontend                              |
-                  
+
 ---
 
-🤖 Language Model Configuration
+## 🤖 Language Model Configuration
 
 | Parameter   | Value                                     | Purpose                                      |
 | ----------- | ----------------------------------------- | -------------------------------------------- |
@@ -124,8 +128,10 @@ This ensures:
 * secure model abstraction
 
 ---
-🧠 Prompt Engineering Strategy
 
+## 🧠 Prompt Engineering Strategy
+
+```text
 You are an expert Ops Analyst AI specializing in enterprise ticket intelligence.
 Use only the provided ticket evidence to answer.
 
@@ -142,7 +148,7 @@ Provide:
 4. Business impact
 ```
 
-🎯 Why this prompt works
+### 🎯 Why this prompt works
 
 * Restricts hallucination by grounding in retrieved ticket evidence
 * Produces structured outputs for downstream reporting
@@ -151,12 +157,15 @@ Provide:
 
 ---
 
-📦 Installation
+## 📦 Installation
 
+```bash
 pip install -r requirements.txt
 ```
-Core Dependencies
 
+### Core Dependencies
+
+```text
 pandas
 numpy
 faiss-cpu
@@ -172,39 +181,67 @@ requests
 streamlit
 ```
 
-▶️ Local Development Workflow
-1) Prepare datasets
+---
+
+## ▶️ Local Development Workflow
+
+### 1) Prepare datasets
+
+```bash
 python data_loader.py
-2) Build embeddings + FAISS index
+```
+
+### 2) Build embeddings + FAISS index
+
+```bash
 python retriever_builder.py
-3) Run RAG pipeline
+```
+
+### 3) Run RAG pipeline
+
+```bash
 python rag_pipeline.py
 ```
-4) Generate stakeholder report
 
+### 4) Generate stakeholder report
+
+```bash
 python report_agent.py
+```
 
-5) Launch dashboard
+### 5) Launch dashboard
 
+```bash
 streamlit run dashboard/dashboard_ui.py
+```
 
 ---
-🐳 Docker Deployment
-Build image
 
+## 🐳 Docker Deployment
+
+### Build image
+
+```bash
 docker build -t aoip .
+```
 
-Run container
+### Run container
 
+```bash
 docker run -p 8501:8501 aoip
+```
 
+### Docker Compose
+
+```bash
 docker-compose up --build
+```
 
 ---
 
-📊 Monitoring & Observability
+## 📊 Monitoring & Observability
 
-Prometheus Metrics
+### Prometheus Metrics
 
 | Metric                         | Type      | Description                    |
 | ------------------------------ | --------- | ------------------------------ |
@@ -212,7 +249,7 @@ Prometheus Metrics
 | `aoip_request_latency_seconds` | Histogram | Component latency distribution |
 | `aoip_errors_total`            | Counter   | Failed requests                |
 
-LangFuse Tracing
+### LangFuse Tracing
 
 Tracks:
 
@@ -227,7 +264,7 @@ This is critical for **production debugging and agent explainability**.
 
 ---
 
-⚖️ Design Decisions & Trade-offs
+## ⚖️ Design Decisions & Trade-offs
 
 | Decision   | Choice                | Trade-off                                            |
 | ---------- | --------------------- | ---------------------------------------------------- |
@@ -239,7 +276,7 @@ This is critical for **production debugging and agent explainability**.
 
 ---
 
-📌 Example Output
+## 📌 Example Output
 
 ```text
 📦 Loaded FAISS index with 2000 vectors
@@ -250,9 +287,9 @@ This is critical for **production debugging and agent explainability**.
 ✅ HTML report saved → reports/Report_TCK00025.html
 📄 PDF report created → reports/Report_TCK00025.pdf
 ```
----
 
-👤 Author
+
+## 👤 Author
 
 **Durga Charan Mishra**
 

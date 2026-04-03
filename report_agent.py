@@ -1,16 +1,4 @@
-"""
-report_agent.py
-────────────────────────────────────────────
-Unified Operational Reporting Agent for AOIP.
 
-Combines:
-    • KPI metrics from InsightAgent
-    • RCA spotlight from RCAAgent
-    • HTML report generation
-    • Native PDF export using ReportLab
-"""
-
-# ───────── IMPORTS ─────────
 from datetime import datetime
 from pathlib import Path
 from jinja2 import Template

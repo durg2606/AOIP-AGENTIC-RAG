@@ -96,15 +96,6 @@ Provide:
 2. Trend insight
 3. Recommended mitigation
 4. Business impact
-🔐 Environment Variables (.env)
-Create .env at project root and store private keys:
-
-env
-
-
-EURI_API_KEY=your_euri_key_here
-OPENAI_API_KEY=optional_fallback
-.env is ignored via .gitignore, keeping keys safe when pushing to GitHub.
 
 🧰 Requirements Summary
 

@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  aoip:
+    build: .
+    container_name: aoip_dashboard
+    ports:
+      - "8501:8501"
+      - "9100:9100"
+    volumes:
+      - .:/app
+    restart: always
+
+  prometheus:
+    image: prom/prometheus
+    container_name: aoip_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: always
+
+  grafana:
+    image: grafana/grafana
+    container_name: aoip_grafana
+    ports:
+      - "3000:3000"
+    restart: always

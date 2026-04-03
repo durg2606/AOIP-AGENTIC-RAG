@@ -1,0 +1,32 @@
+# ------------- PYTHON CACHE ---------------- #
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ------------- ENV / SECRETS ---------------- #
+.env
+.env.*
+app/config.py         # contains API key or secrets, exclude it
+config.json
+apikey.txt
+
+# ------------- DATA & GENERATED FILES ------- #
+/data/*.csv
+/data/*.parquet
+/faiss_index/*
+/reports/*
+/monitoring/*.log
+
+# ------------- OS / IDE FILES --------------- #
+.DS_Store
+.vscode/
+.idea/
+*.bak
+
+# ------------- DOCKER / PROMETHEUS ---------- #
+/observability/*.db
+/observability/*.log
+
+# ------------- NOTEBOOK OUTPUT -------------- #
+*.ipynb_checkpoints

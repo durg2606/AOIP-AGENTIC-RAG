@@ -1,0 +1,11 @@
+streamlit
+pandas
+numpy
+plotly
+faiss-cpu
+sentence-transformers
+jinja2
+reportlab
+prometheus-client
+langfuse
+euriai

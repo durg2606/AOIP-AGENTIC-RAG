@@ -1,35 +1,49 @@
-🧠 Agentic Operational Intelligence Platform (AOIP)
-An enterprise‑grade multi‑agent Retrieval‑Augmented Generation (RAG) system that automates KPI analytics, root‑cause diagnostics, and stakeholder reporting for IT Operations using LangChain, FAISS, and EURI GPT‑4.1‑nano.
+# 🧠 Agentic Operational Intelligence Platform (AOIP)
 
-🚀 Overview
-AOIP turns raw operational data (tickets, SLA logs, feedback) into real‑time, intelligent insights.
-It uses model‑driven RAG retrieval, analytical agents, and automated reporting to deliver explainable, actionable intelligence.
-User Query 
+**Enterprise-grade multi-agent Retrieval-Augmented Generation (RAG) platform for IT Operations intelligence**
+
+AOIP transforms raw IT operations data—tickets, SLA logs, feedback, and incident metadata—into **real-time KPI insights, root-cause diagnostics, and executive-ready reports**.
+
+Built with **LangChain, FAISS, Sentence Transformers, Prometheus, LangFuse, Streamlit, and EURI GPT-4.1-nano**, the platform combines **RAG retrieval, specialized analytical agents, observability, and automated reporting** into a production-oriented operational intelligence stack.
+
+---
+
+🚀 Key Capabilities
+
+* 🔍 **Semantic ticket intelligence** using FAISS + MiniLM embeddings
+* 📈 **KPI analytics** for SLA breach %, MTTR, CSAT, and trend drift
+* 🧩 **Root Cause Analysis (RCA)** with severity clustering and issue distribution
+* 📄 **Automated stakeholder reporting** in HTML + PDF
+* 📊 **Interactive Streamlit dashboard** for operational monitoring
+* 📡 **Full observability** with Prometheus metrics + LangFuse tracing
+* 🐳 **Dockerized deployment** for reproducible enterprise environments
+
+---
+
+🏗️ Architecture Overview
+
+User Query
    → RAG Retriever (FAISS + MiniLM)
    → KPI Insight Agent
    → RCA Agent
    → Report Agent (HTML / PDF)
    → Outputs + Metrics + Dashboards
+```
 
-🧩 Core Components
-Module	Responsibility
-data_loader.py	ETL – loads and cleans CSV datasets; saves Parquet versions.
-retriever_builder.py	Builds Sentence‑Transformer embeddings and FAISS index.
-rag_pipeline.py	Retrieval → Prompt → Query to EURI GPT‑4.1‑nano → Response.
-insight_agent.py	SLA & KPI metrics analysis and trend visualization.
-rca_agent.py	Root cause lookup and severity distribution analysis.
-report_agent.py	Combines KPI + RCA into HTML and PDF reports (Jinja2 + ReportLab).
-monitoring/logger.py	Prometheus metrics & LangFuse trace integration via @monitor decorator.
-app/chat_utils.py	Connects to EURI API (GPT‑4.1‑nano) with temperature = 0.7.
-dashboard/dashboard_ui.py	Streamlit‑ready frontend (dashboard & reports).
-⚙️ Language Model Configuration
-Parameter	Setting	Description
-Model	gpt-4.1-nano	Lightweight GPT‑4 variant hosted via EURI API for low latency.
-Temperature	 0.7	Moderate creativity for balanced trend and insight generation.
-API Endpoint	 [api.euri.ai](https://api.euri.ai/v1/chat/completions)	Invoked through get_chat_model() and ask_chat_model() in app/chat_utils.py.
-All RAG requests go through these functions, ensuring secure and traceable API calls.
+⚙️ Processing Flow
 
-🧱 Project Structure
+1. **Data Ingestion** → CSV → cleaned Parquet datasets
+2. **Embedding Pipeline** → MiniLM sentence embeddings → FAISS index
+3. **RAG Query Engine** → retrieve evidence → prompt → EURI GPT-4.1-nano
+4. **Insight Agent** → SLA, MTTR, CSAT, breach analysis
+5. **RCA Agent** → issue mapping, severity analysis, trend detection
+6. **Report Agent** → Jinja2 HTML + ReportLab PDF generation
+7. **Observability Layer** → Prometheus + LangFuse
+
+---
+
+📁 Project Structure
+
 AOIP-AGENTIC-RAG/
 ├── app/
 │   ├── __init__.py
@@ -40,10 +54,11 @@ AOIP-AGENTIC-RAG/
 │   └── dashboard_ui.py
 │
 ├── data/
-│   ├── tickets.csv / .parquet
-│   ├── sla_logs.csv / .parquet
-│   ├── root_cause.csv / .parquet
-│   ├── feedback.csv / .parquet
+│   ├── tickets.csv
+│   ├── sla_logs.csv
+│   ├── root_cause.csv
+│   ├── feedback.csv
+│   ├── *.parquet
 │   └── ticket_rootcause_links.csv
 │
 ├── faiss_index/
@@ -54,8 +69,12 @@ AOIP-AGENTIC-RAG/
 │   ├── __init__.py
 │   └── logger.py
 │
-├── observability/prometheus.yml
-├── reports/                 # auto‑generated HTML & PDF reports
+├── observability/
+│   └── prometheus.yml
+│
+├── reports/
+│   ├── *.html
+│   └── *.pdf
 │
 ├── data_loader.py
 ├── retriever_builder.py
@@ -63,77 +82,196 @@ AOIP-AGENTIC-RAG/
 ├── insight_agent.py
 ├── rca_agent.py
 ├── report_agent.py
-│
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
 └── README.md
+```
 
-⚗️ Core Workflow
-1. Data Ingestion → CSV ➡ clean ➡ Parquet
-2. Embedding Builder → MiniLM Sentence‑Transformers ➡ FAISS index
-3. RAG Pipeline → retrieve context + prompt ➡ gpt‑4.1‑nano
-4. Insight Agent → KPI calculations (breach %, resolution time, CSAT)
-5. RCA Agent → root‑cause mapping and severity plots
-6. Report Agent → HTML & PDF reports (Jinja2 + ReportLab)
-7. Monitoring → Prometheus metrics and LangFuse traces.
+🧩 Core Modules
 
-🧠 Prompt Template (Excerpt)
-You are an expert Ops Analyst AI specializing in enterprise ticket intelligence.  
-Use only the provided ticket evidence to answer.
-Ticket Context:
+| Module                      | Responsibility                                            |
+| --------------------------- | --------------------------------------------------------- |
+| `data_loader.py`            | ETL pipeline for cleaning CSV files and exporting Parquet |
+| `retriever_builder.py`      | Builds MiniLM embeddings and FAISS vector index           |
+| `rag_pipeline.py`           | Retrieval → prompting → EURI GPT inference                |
+| `insight_agent.py`          | KPI and SLA analytics with trend visualization            |
+| `rca_agent.py`              | Root-cause lookup, clustering, severity analysis          |
+| `report_agent.py`           | HTML/PDF stakeholder reports                              |
+| `monitoring/logger.py`      | Prometheus metrics + LangFuse tracing decorators          |
+| `dashboard/dashboard_ui.py` | Streamlit dashboard frontend                              |
+                  
+---
+
+🤖 Language Model Configuration
+
+| Parameter   | Value                                     | Purpose                                      |
+| ----------- | ----------------------------------------- | -------------------------------------------- |
+| Model       | `gpt-4.1-nano`                            | Low-latency reasoning and reporting          |
+| Temperature | `0.7`                                     | Balanced factuality + analytical flexibility |
+
+All LLM requests are routed through:
+
+* `get_chat_model()`
+* `ask_chat_model()`
+
+This ensures:
+
+* centralized auth
+* retry logic
+* traceability
+* latency measurement
+* secure model abstraction
+
+---
+🧠 Prompt Engineering Strategy
+
+You are an expert Ops Analyst AI specializing in enterprise ticket intelligence.
+Use only the provided ticket evidence to answer.
+
+Ticket Context:
 {context}
+
 Question:
 {question}
+
 Provide:
-1. Root cause
-2. Trend insight
-3. Recommended mitigation
-4. Business impact
+1. Root cause
+2. Trend insight
+3. Recommended mitigation
+4. Business impact
+```
 
-🧰 Requirements Summary
-pandas               numpy
-faiss-cpu            sentence-transformers
-langchain-core       jinja2
-reportlab            plotly
-python-dotenv        prometheus-client
-langfuse             requests
+🎯 Why this prompt works
 
-▶️ Run Locally
-1. Set up the environment
+* Restricts hallucination by grounding in retrieved ticket evidence
+* Produces structured outputs for downstream reporting
+* Aligns naturally with RCA and KPI workflows
+* Easy to extend into JSON schema outputs later
+
+---
+
+📦 Installation
+
 pip install -r requirements.txt
-2. Prepare cleaned data
-python data_loader.py
-3. Generate sentence embeddings + index
-python retriever_builder.py
-4. Run RAG query
-python rag_pipeline.py
-5. Generate Report
-python report_agent.py
-6. (Option) Run Dashboard
-streamlit run dashboard/dashboard_ui.py
-💾 Docker Usage
-docker build -t aoip 
-📊 Monitoring Metrics
-Metric	Description
-aoip_requests_total	total RAG/Agent calls processed
-aoip_request_latency_seconds	latency (histogram, per component)
-status (trace)	success / error via LangFuse
-🧩 Design Choices & Trade‑offs
-Decision	Rationale
-MiniLM‑L6‑v2 Embeddings	Fast CPU embedding – best balance between semantic quality and speed.
-FAISS IndexFlatIP	Simple and deterministic; upgrade to IVF/HNSW for scale.
-GPT‑4.1‑nano	Cost‑efficient GPT‑4 variant with low latency.
-Temperature = 0.7	Balances creativity with factual reporting.
-Jinja2 + ReportLab	Offline generation of print‑ready reports.
-Prometheus + LangFuse	Full observability and traceability for production.
-🧾 Sample Output
-📦 Loaded FAISS index with 2000 vectors
-🔍 Retrieved 5 relevant tickets
-📊 Breach Rate = 7.35% (189/2572)
-✅ HTML report saved → reports/Report_TCK00025.html
-📄 PDF report created → reports/Report_TCK00025.pdf
+```
+Core Dependencies
 
-👤 Author
-Durga Charan Mishra
-🎓 IIT Jodhpur MBA  |  AI & Analytics Professional
+pandas
+numpy
+faiss-cpu
+sentence-transformers
+langchain-core
+jinja2
+reportlab
+plotly
+python-dotenv
+prometheus-client
+langfuse
+requests
+streamlit
+```
+
+▶️ Local Development Workflow
+1) Prepare datasets
+python data_loader.py
+2) Build embeddings + FAISS index
+python retriever_builder.py
+3) Run RAG pipeline
+python rag_pipeline.py
+```
+4) Generate stakeholder report
+
+python report_agent.py
+
+5) Launch dashboard
+
+streamlit run dashboard/dashboard_ui.py
+
+---
+🐳 Docker Deployment
+Build image
+
+docker build -t aoip .
+
+Run container
+
+docker run -p 8501:8501 aoip
+
+docker-compose up --build
+
+---
+
+📊 Monitoring & Observability
+
+Prometheus Metrics
+
+| Metric                         | Type      | Description                    |
+| ------------------------------ | --------- | ------------------------------ |
+| `aoip_requests_total`          | Counter   | Total agent and RAG requests   |
+| `aoip_request_latency_seconds` | Histogram | Component latency distribution |
+| `aoip_errors_total`            | Counter   | Failed requests                |
+
+LangFuse Tracing
+
+Tracks:
+
+* prompt lineage
+* retrieval context
+* token usage
+* latency
+* failures
+* RCA decision flow
+
+This is critical for **production debugging and agent explainability**.
+
+---
+
+⚖️ Design Decisions & Trade-offs
+
+| Decision   | Choice                | Trade-off                                            |
+| ---------- | --------------------- | ---------------------------------------------------- |
+| Embeddings | MiniLM-L6-v2          | Fast CPU inference, moderate semantic depth          |
+| Vector DB  | FAISS IndexFlatIP     | Deterministic and fast, less scalable than HNSW      |
+| LLM        | GPT-4.1-nano          | Low latency, smaller reasoning depth than full GPT-4 |
+| Reporting  | Jinja2 + ReportLab    | Excellent offline exports, more template maintenance |
+| Monitoring | Prometheus + LangFuse | Strong observability, extra infra complexity         |
+
+---
+
+📌 Example Output
+
+```text
+📦 Loaded FAISS index with 2000 vectors
+🔍 Retrieved 5 relevant tickets
+📊 Breach Rate = 7.35% (189/2572)
+📈 MTTR Trend = +11.2% WoW
+🚨 Dominant RCA = Database connection timeout
+✅ HTML report saved → reports/Report_TCK00025.html
+📄 PDF report created → reports/Report_TCK00025.pdf
+```
+---
+
+👤 Author
+
+**Durga Charan Mishra**
+
+🎓 IIT Jodhpur MBA
+📊 AI, Analytics & Operational Intelligence Professional
+
+---
+
+## ⭐ Business Value
+
+AOIP is designed for **enterprise ITSM, SRE, Ops Analytics, and CIO reporting workflows** where explainable AI must connect **ticket evidence → diagnostics → mitigation → stakeholder reporting**.
+
+It is especially effective for:
+
+* IT service desk intelligence
+* SLA governance
+* recurring incident RCA
+* executive ops dashboards
+* service quality trend reporting
+* operational risk visibility
+
+---

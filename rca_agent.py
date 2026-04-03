@@ -1,22 +1,12 @@
-"""
-rca_agent.py
-────────────────────────────────────────────
-Structured Root Cause Analytics Agent for AOIP.
-"""
-
-# ─────────────── IMPORTS ────────────────
 from pathlib import Path
 import pandas as pd
 import plotly.express as px
 from monitoring.logger import monitor
 
 
-# ─────────────── CONFIGURATION ──────────
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 
-
-# ─────────────── RCA AGENT ──────────────
 class RCAAgent:
     """
     Handles root-cause lookup, RCA analytics,
